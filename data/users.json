@@ -1,0 +1,86 @@
+{
+  "arjun.admin@northstar.local": {
+    "active": true,
+    "departments": [
+      "all"
+    ],
+    "display_name": "Arjun Mehta",
+    "email": "arjun.admin@northstar.local",
+    "password_hash": "240be518fabd2724ddb6f04eeb1da5967448d7e831c08c8fa822809f74c720a9",
+    "password_hint": "admin123",
+    "role": "admin",
+    "title": "AI Platform Admin"
+  },
+  "dev.engineering@northstar.local": {
+    "active": true,
+    "departments": [
+      "engineering"
+    ],
+    "display_name": "Dev Iyer",
+    "email": "dev.engineering@northstar.local",
+    "password_hash": "f63248efa4a61efc9f4c9f6e5de25b34b6f2b827717cd4c6b3905481c3bd483b",
+    "password_hint": "eng123",
+    "role": "employee",
+    "title": "Platform Engineer"
+  },
+  "leena.legal@northstar.local": {
+    "active": true,
+    "departments": [
+      "legal"
+    ],
+    "display_name": "Leena Desai",
+    "email": "leena.legal@northstar.local",
+    "password_hash": "bce14beaddab2ebc3e8e214509404b8d3d2b43b3968bf214ececb8a746cbe4f4",
+    "password_hint": "legal123",
+    "role": "employee",
+    "title": "Legal Counsel"
+  },
+  "maya.marketing@northstar.local": {
+    "active": true,
+    "departments": [
+      "marketing"
+    ],
+    "display_name": "Maya Patel",
+    "email": "maya.marketing@northstar.local",
+    "password_hash": "7d50137f0395e9a47a5daf16959dd68abef6370d3b837ec3be4fe9d869db46a3",
+    "password_hint": "marketing123",
+    "role": "employee",
+    "title": "Marketing Manager"
+  },
+  "nisha.ceo@northstar.local": {
+    "active": true,
+    "departments": [
+      "all"
+    ],
+    "display_name": "Nisha Rao",
+    "email": "nisha.ceo@northstar.local",
+    "password_hash": "36ca949d1f95aff0c68dbca6dffa4386de2366ca367854294c6377432bca85f0",
+    "password_hint": "ceo123",
+    "role": "executive",
+    "title": "Chief Executive Officer"
+  },
+  "omar.hr@northstar.local": {
+    "active": true,
+    "departments": [
+      "hr"
+    ],
+    "display_name": "Omar Khan",
+    "email": "omar.hr@northstar.local",
+    "password_hash": "070a3b5e8d4bd5c46acccb91c9c54614c0cd649e78c4c4719e3a64270bae5ddf",
+    "password_hint": "hr123",
+    "role": "employee",
+    "title": "HR Operations"
+  },
+  "priya.finance@northstar.local": {
+    "active": true,
+    "departments": [
+      "finance"
+    ],
+    "display_name": "Priya Shah",
+    "email": "priya.finance@northstar.local",
+    "password_hash": "48f7312924d74358e75294e3b3613f2319d99e944184b69550f528577ca082fb",
+    "password_hint": "finance123",
+    "role": "employee",
+    "title": "Finance Analyst"
+  }
+}

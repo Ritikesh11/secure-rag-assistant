@@ -1,0 +1,39 @@
+# Local environment and secrets
+.env
+.env.*
+!.env.example
+.venv/
+venv/
+env/
+
+# Python caches and test output
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+
+# Streamlit and OS files
+.streamlit/secrets.toml
+.DS_Store
+
+# Local generated data
+chroma_db/
+logs/
+data/uploads/
+
+# Generated evaluation reports
+evals/latest_results.csv
+evals/ragas_score_report.csv
+evals/ragas_score_report.md
+evals/chatbot_quality_report.csv
+evals/chatbot_quality_report.md
+
+# Personal/course submission files
+docs/termination_project_progress_report.md
+docs/termination_project_progress_report.docx
+scripts/create_progress_report_docx.py
+
+# Large or generated documents
+*.tmp
+*.bak

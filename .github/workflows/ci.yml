@@ -1,0 +1,31 @@
+name: rag-rbac-ci
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+jobs:
+  test-and-evaluate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run unit tests
+        run: pytest tests
+
+      - name: Build vector index
+        run: python -m app.ingest --source data/sample_docs --reset
+
+      - name: Run RAG regression evals
+        run: RAGAS_JUDGE_MODE=heuristic python evals/run_ragas.py
