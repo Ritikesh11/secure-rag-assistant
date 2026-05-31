@@ -51,6 +51,27 @@ During ingestion, each chunk is stored in ChromaDB with metadata:
 
 When a user asks a question, the app builds a metadata filter from the user's role and departments. That filter is applied before context is sent to the model, so the LLM only receives text the user is allowed to see.
 
+## Architecture
+
+```mermaid
+flowchart LR
+    U["User"] --> UI["Streamlit UI"]
+    UI --> AUTH["Login + User Profile"]
+    AUTH --> RBAC["RBAC Metadata Filter"]
+    RBAC --> RET["Retriever"]
+    DOCS["Company Documents"] --> INGEST["Ingestion Pipeline"]
+    INGEST --> EMB["Embeddings"]
+    EMB --> VDB["ChromaDB Vector Store"]
+    VDB --> RET
+    RET --> CTX["Authorized Context"]
+    CTX --> LLM["Groq / Llama"]
+    LLM --> ANS["Source-Grounded Answer"]
+    ANS --> UI
+    UI --> LOGS["Audit, Usage, Cost, Feedback Logs"]
+```
+
+RBAC is applied before generation. The model only receives chunks that pass the user's role and department filters.
+
 ## Project Structure
 
 ```text
