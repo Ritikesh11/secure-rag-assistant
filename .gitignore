@@ -32,7 +32,12 @@ evals/chatbot_quality_report.md
 # Personal/course submission files
 docs/termination_project_progress_report.md
 docs/termination_project_progress_report.docx
+docs/ritikesh_nikam_resume_updated.md
+docs/ritikesh_nikam_resume_updated.docx
 scripts/create_progress_report_docx.py
+
+# Other local projects/workspaces
+sbi-securities-redesign/
 
 # Large or generated documents
 *.tmp
