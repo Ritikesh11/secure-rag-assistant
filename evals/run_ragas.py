@@ -9,13 +9,6 @@ import sys
 from groq import Groq
 import instructor
 import pandas as pd
-from ragas import EvaluationDataset, SingleTurnSample, evaluate
-from ragas.embeddings import HuggingFaceEmbeddings
-from ragas.llms import InstructorLLM
-from ragas.metrics._answer_correctness import AnswerCorrectness
-from ragas.metrics._context_precision import LLMContextPrecisionWithoutReference
-from ragas.metrics._context_recall import LLMContextRecall
-from ragas.metrics._faithfulness import Faithfulness
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
@@ -104,7 +97,9 @@ def _answer_coverage_score(answer: str, contexts: str) -> float:
     return round(max(0.0, 1 - (len(unsupported_terms) / len(answer_terms))), 4)
 
 
-def _build_ragas_llm() -> InstructorLLM:
+def _build_ragas_llm():
+    from ragas.llms import InstructorLLM
+
     settings = get_settings()
     patched_client = instructor.from_groq(Groq(api_key=settings.groq_api_key))
     return InstructorLLM(
@@ -116,7 +111,7 @@ def _build_ragas_llm() -> InstructorLLM:
     )
 
 
-def _collect_responses(dataset: pd.DataFrame) -> tuple[pd.DataFrame, EvaluationDataset]:
+def _collect_responses(dataset: pd.DataFrame) -> tuple[pd.DataFrame, list[dict]]:
     service = RagService()
     rows = []
     samples = []
@@ -156,21 +151,39 @@ def _collect_responses(dataset: pd.DataFrame) -> tuple[pd.DataFrame, EvaluationD
             }
         )
         samples.append(
-            SingleTurnSample(
-                user_input=row["question"],
-                response=answer,
-                reference=row["expected_answer"],
-                retrieved_contexts=contexts,
-            )
+            {
+                "user_input": row["question"],
+                "response": answer,
+                "reference": row["expected_answer"],
+                "retrieved_contexts": contexts,
+            }
         )
 
-    return pd.DataFrame(rows), EvaluationDataset(samples=samples)
+    return pd.DataFrame(rows), samples
 
 
-def _score_with_ragas(eval_dataset: EvaluationDataset) -> pd.DataFrame:
+def _score_with_ragas(eval_samples: list[dict]) -> pd.DataFrame:
     if RAGAS_JUDGE_MODE == "heuristic":
         raise RuntimeError("Skipping built-in Ragas LLM judge because RAGAS_JUDGE_MODE=heuristic.")
 
+    from ragas import EvaluationDataset, SingleTurnSample, evaluate
+    from ragas.embeddings import HuggingFaceEmbeddings
+    from ragas.metrics._answer_correctness import AnswerCorrectness
+    from ragas.metrics._context_precision import LLMContextPrecisionWithoutReference
+    from ragas.metrics._context_recall import LLMContextRecall
+    from ragas.metrics._faithfulness import Faithfulness
+
+    eval_dataset = EvaluationDataset(
+        samples=[
+            SingleTurnSample(
+                user_input=sample["user_input"],
+                response=sample["response"],
+                reference=sample["reference"],
+                retrieved_contexts=sample["retrieved_contexts"],
+            )
+            for sample in eval_samples
+        ]
+    )
     llm = _build_ragas_llm()
     embeddings = HuggingFaceEmbeddings(model="all-MiniLM-L6-v2")
     metrics = [
